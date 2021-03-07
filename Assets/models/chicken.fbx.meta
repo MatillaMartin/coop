@@ -4,14 +4,14 @@ ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
-      74: 732391451366026302
-    second: Armature|IdleAction
+      74: 7007069243673831616
+    second: WalkAnim
   - first:
-      74: -3492172201194209893
-    second: Armature|PeckAnim
+      74: -6595878346374037491
+    second: PeckAnim
   - first:
-      74: 4872884743986325063
-    second: Armature|WalkAnim
+      74: -961171077366229376
+    second: IdleAction
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -41,8 +41,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature|IdleAction
-      takeName: Armature|IdleAction
+      name: WalkAnim
+      takeName: WalkAnim
       internalID: 0
       firstFrame: 0
       lastFrame: 29
@@ -70,8 +70,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|PeckAnim
-      takeName: Armature|PeckAnim
+      name: PeckAnim
+      takeName: PeckAnim
       internalID: 0
       firstFrame: 0
       lastFrame: 9
@@ -99,8 +99,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|WalkAnim
-      takeName: Armature|WalkAnim
+      name: IdleAction
+      takeName: IdleAction
       internalID: 0
       firstFrame: 0
       lastFrame: 29
