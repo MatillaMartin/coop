@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class WeaponInventory : MonoBehaviour
 {
+    // Current list of weapons in the inventory
     public List<Weapon> m_weapons;
+
+    // Where to hold the weapon
+    public Transform m_weaponTransform;
 
     // Start is called before the first frame update
     void Start()
@@ -12,7 +16,7 @@ public class WeaponInventory : MonoBehaviour
         foreach (Weapon weapon in m_weapons)
         {
             weapon.gameObject.SetActive(false);
-            weapon.gameObject.transform.localPosition = weapon.offset;
+            weapon.gameObject.transform.SetParent(m_weaponTransform);
         }
     }
 
@@ -26,16 +30,14 @@ public class WeaponInventory : MonoBehaviour
     {
         if (m_weapons.Contains(weapon))
         {
-            Weapon(weapon.type).AddAmmo(weapon.Ammo());
+            Weapon(weapon.type).AddAmmo(weapon.TotalAmmo());
         }
         else
         {
             // Instantiate Weapon from prefab
-            Weapon instance = Instantiate(weapon, this.gameObject.transform);
+            Weapon instance = Instantiate(weapon, m_weaponTransform);
             // Hide until selected
             instance.gameObject.SetActive(false);
-            // Place weapon at the correct offset position relative to player (custom value for Chicken model)
-            instance.gameObject.transform.localPosition = instance.offset;
             // Add to weapons list
             m_weapons.Add(weapon);
         }

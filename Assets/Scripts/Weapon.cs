@@ -4,11 +4,10 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public WeaponType type = WeaponType.None;
-    public Vector3 offset;
+    public uint magazineSize;
+    public uint storedAmmo;
+    public uint loadedAmmo;
 
-    private uint m_storedAmmo;
-    private uint m_currentAmmo;
-    private uint m_magSize;
 
     // Start is called before the first frame update
     void Start()
@@ -25,26 +24,31 @@ public class Weapon : MonoBehaviour
     public void Reload()
     {
         // set ammo as big as the magazine size, or at least the stored ammo available
-        m_currentAmmo = Math.Min(m_storedAmmo, m_magSize);
-        m_storedAmmo -= m_currentAmmo;
+        loadedAmmo = Math.Min(storedAmmo, magazineSize);
+        storedAmmo -= loadedAmmo;
     }
 
-    public void Shoot()
+    public void Fire()
     {
         // if there is ammo to shoot, reduce current ammo 
-        if (m_currentAmmo > 0)
+        if (loadedAmmo > 0)
         {
-            m_currentAmmo--;
+            loadedAmmo--;
         }
     }
 
     public void AddAmmo(uint ammo)
     {
-        m_storedAmmo += ammo;
+        storedAmmo += ammo;
     }
 
-    public uint Ammo()
+    public uint TotalAmmo()
     {
-        return m_storedAmmo + m_currentAmmo;
+        return storedAmmo + loadedAmmo;
+    }
+
+    public uint LoadedAmmo()
+    {
+        return loadedAmmo;
     }
 }

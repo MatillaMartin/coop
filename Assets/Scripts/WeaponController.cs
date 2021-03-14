@@ -4,17 +4,21 @@ using UnityEngine.InputSystem;
 
 public class WeaponController : MonoBehaviour
 {
-    public WeaponInventory m_inventory = null;
-    public Weapon m_currentWeapon = null;
+    public WeaponInventory inventory = null;
+    public Weapon currentWeapon = null;
+    public bool autoReload = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (m_inventory is null)
+        if (inventory is null)
         {
-            m_inventory = GetComponent<WeaponInventory>();
-            Assert.IsNotNull(m_inventory, "GameObject must contain a WeaponInventory");
+            inventory = GetComponent<WeaponInventory>();
+            Assert.IsNotNull(inventory, "GameObject must contain a WeaponInventory");
         }
+
+        // start with first weapon
+        SetCurrentWeapon(inventory.NextWeapon(currentWeapon));
     }
 
     // Update is called once per frame
@@ -22,16 +26,39 @@ public class WeaponController : MonoBehaviour
     {
     }
 
-    public void onWeaponChange(InputAction.CallbackContext context)
+    public void OnWeaponFire(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            Debug.Log("Action was performed");
+            if (currentWeapon)
+            {
+                // activate fire in current weapon
+                if (currentWeapon.LoadedAmmo() > 0)
+                {
+                    Debug.Log("pew pew");
+                    currentWeapon.Fire();
+
+                    // automatic reload
+                    if (autoReload)
+                    {
+                        if (currentWeapon.LoadedAmmo() == 0)
+                        {
+                            currentWeapon.Reload();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void OnWeaponChange(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
             var axis = context.ReadValue<float>();
             if (axis > 0)
             {
-                Debug.Log("On Next weapon");
-                Weapon weapon = m_inventory.NextWeapon(m_currentWeapon);
+                Weapon weapon = inventory.NextWeapon(currentWeapon);
                 SetCurrentWeapon(weapon);
                 if (weapon is null)
                 {
@@ -40,8 +67,7 @@ public class WeaponController : MonoBehaviour
             }
             else if (axis < 0)
             {
-                Debug.Log("On Previous weapon");
-                Weapon weapon = m_inventory.PreviousWeapon(m_currentWeapon);
+                Weapon weapon = inventory.PreviousWeapon(currentWeapon);
                 SetCurrentWeapon(weapon);
                 if (weapon is null)
                 {
@@ -54,17 +80,17 @@ public class WeaponController : MonoBehaviour
     void SetCurrentWeapon(Weapon weapon)
     {
         // Check if the new weapon is different from the last weapon
-        if (m_currentWeapon != weapon)
+        if (currentWeapon != weapon)
         {
             // If we already had a weapon, hide it
-            if (m_currentWeapon)
+            if (currentWeapon)
             {
-                m_currentWeapon.gameObject.SetActive(false);
+                currentWeapon.gameObject.SetActive(false);
             }
 
             // Set the new weapon in the correct position and show it. Mark as current
             weapon.gameObject.SetActive(true);
-            m_currentWeapon = weapon;
+            currentWeapon = weapon;
         }
         else
         {

@@ -52,6 +52,17 @@
                 },
                 {
                     "name": "",
+                    "id": "20a4c578-e1e6-4ec6-b2eb-4e7c98d1dfe3",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "fe0db6b8-25c0-4bb0-ab1f-5c815a4bd3dc",
                     "path": "<Mouse>/position",
                     "interactions": "",
