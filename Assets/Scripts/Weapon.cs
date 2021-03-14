@@ -6,6 +6,10 @@ public class Weapon : MonoBehaviour
     public WeaponType type = WeaponType.None;
     public Vector3 offset;
 
+    private uint m_storedAmmo;
+    private uint m_currentAmmo;
+    private uint m_magSize;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,9 +24,9 @@ public class Weapon : MonoBehaviour
 
     public void Reload()
     {
-        // set ammo as big as the magazine size, or at least the tothal ammo available
-        m_currentAmmo = Math.Min(m_totalAmmo, m_magSize);
-        m_totalAmmo -= m_currentAmmo;
+        // set ammo as big as the magazine size, or at least the stored ammo available
+        m_currentAmmo = Math.Min(m_storedAmmo, m_magSize);
+        m_storedAmmo -= m_currentAmmo;
     }
 
     public void Shoot()
@@ -34,7 +38,13 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    private uint m_totalAmmo;
-    private uint m_currentAmmo;
-    private uint m_magSize;
+    public void AddAmmo(uint ammo)
+    {
+        m_storedAmmo += ammo;
+    }
+
+    public uint Ammo()
+    {
+        return m_storedAmmo + m_currentAmmo;
+    }
 }

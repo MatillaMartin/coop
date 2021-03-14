@@ -22,9 +22,13 @@ public class WeaponInventory : MonoBehaviour
 
     }
 
-    public void AddWeapon(Weapon weapon)
+    public void Add(Weapon weapon)
     {
-        if (!m_weapons.Contains(weapon))
+        if (m_weapons.Contains(weapon))
+        {
+            Weapon(weapon.type).AddAmmo(weapon.Ammo());
+        }
+        else
         {
             // Instantiate Weapon from prefab
             Weapon instance = Instantiate(weapon, this.gameObject.transform);
@@ -35,13 +39,14 @@ public class WeaponInventory : MonoBehaviour
             // Add to weapons list
             m_weapons.Add(weapon);
         }
-        else
-        {
-            Debug.Log("WeaponInventory already contains " + weapon.type);
-        }
     }
 
-    public GameObject GetWeapon(WeaponType type)
+    public bool Contains(Weapon weapon)
+    {
+        return m_weapons.Contains(weapon);
+    }
+
+    public Weapon Weapon(WeaponType type)
     {
         Weapon weapon = m_weapons.Find(x => x.type == type);
         if (!weapon)
@@ -50,7 +55,7 @@ public class WeaponInventory : MonoBehaviour
             return null;
         }
 
-        return weapon.gameObject;
+        return weapon;
     }
 
     private int WeaponIndex(Weapon weapon)
