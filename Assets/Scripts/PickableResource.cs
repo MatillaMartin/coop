@@ -1,12 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 
-public class PickableResource : MonoBehaviour
+public class PickableResource : MonoBehaviour, IPickable
 {
-    public PlayerResources playerResources;
     public Resource resource;
 
     public void OnPick(GameObject picker)
     {
-        playerResources.Add(resource);
+        var playerResources = picker.GetComponent<PlayerResources>();
+        Assert.IsNotNull(playerResources);
+        if (playerResources)
+        {
+            // add resource to player resources
+            playerResources.Add(resource);
+
+            // remove pickable resource
+            Destroy(gameObject);
+        }
     }
 }

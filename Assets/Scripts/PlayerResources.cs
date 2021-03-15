@@ -2,7 +2,7 @@
 using UnityEngine;
 public class PlayerResources : MonoBehaviour
 {
-    Dictionary<ResourceType, int> m_resurces;
+    public Dictionary<ResourceType, int> resources = new Dictionary<ResourceType, int>();
 
     // Start is called before the first frame update
     void Start()
@@ -10,7 +10,7 @@ public class PlayerResources : MonoBehaviour
         // intialize all resources with zero
         foreach (ResourceType resource in ResourceType.GetValues(typeof(ResourceType)))
         {
-            m_resurces.Add(resource, 0);
+            resources.Add(resource, 0);
         }
     }
 
@@ -20,7 +20,12 @@ public class PlayerResources : MonoBehaviour
     /// <param name="resource">Resource to add</param>
     public void Add(Resource resource)
     {
-        m_resurces[resource.type] += resource.amount;
+        resources[resource.type] += resource.amount;
+
+        foreach (KeyValuePair<ResourceType, int> pair in resources)
+        {
+            Debug.Log(pair.Key + " " + pair.Value);
+        }
     }
 
     /// <summary>
@@ -30,7 +35,7 @@ public class PlayerResources : MonoBehaviour
     /// <returns></returns>
     public bool Contains(Resource resource)
     {
-        return m_resurces[resource.type] >= resource.amount;
+        return resources[resource.type] >= resource.amount;
     }
 
     /// <summary>
@@ -40,13 +45,13 @@ public class PlayerResources : MonoBehaviour
     /// <returns>False if not enough resources, True if </returns>
     public bool Remove(Resource resource)
     {
-        int leftOver = m_resurces[resource.type] - resource.amount;
+        int leftOver = resources[resource.type] - resource.amount;
         if (leftOver < 0)
         {
             return false;
         }
 
-        m_resurces[resource.type] = leftOver;
+        resources[resource.type] = leftOver;
         return true;
     }
 }
