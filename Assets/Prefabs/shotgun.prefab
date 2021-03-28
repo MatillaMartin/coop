@@ -98,6 +98,13 @@ MonoBehaviour:
   magazineSize: 1
   storedAmmo: 99
   loadedAmmo: 1
+  bulletPrefab: {fileID: 7552554179249564524, guid: 08269ad996d4ceb469c2991be7bbd131,
+    type: 3}
+  bulletData:
+    weaponType: 0
+    damage: 10
+    speed: 1
+  bulletSpawn: {fileID: 9013424322091770952}
 --- !u!1 &6191963586010560139
 GameObject:
   m_ObjectHideFlags: 0

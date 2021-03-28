@@ -7,7 +7,9 @@ public class Weapon : MonoBehaviour
     public uint magazineSize;
     public uint storedAmmo;
     public uint loadedAmmo;
-
+    public GameObject bulletPrefab;
+    public BulletData bulletData;
+    public Transform bulletSpawn;
 
     // Start is called before the first frame update
     void Start()
@@ -30,11 +32,23 @@ public class Weapon : MonoBehaviour
 
     public void Fire()
     {
-        // if there is ammo to shoot, reduce current ammo 
-        if (loadedAmmo > 0)
+        if (loadedAmmo <= 0)
         {
-            loadedAmmo--;
+            // emtpy ammo sound?
+            return;
         }
+
+        // project and deal weapon damage
+        // TODO use a pool of bullets
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+        WeaponBullet bulletComp = bullet.GetComponent<WeaponBullet>();
+        bulletData.weaponType = type;
+        bulletComp.data = bulletData;
+        bulletComp.source = gameObject;
+        bulletComp.Shoot();
+
+        // if there is ammo to shoot, reduce current ammo 
+        loadedAmmo--;
     }
 
     public void AddAmmo(uint ammo)
