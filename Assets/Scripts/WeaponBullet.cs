@@ -37,9 +37,9 @@ public class WeaponBullet : MonoBehaviour
         rigid.velocity = gameObject.transform.forward * data.speed;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        HealthController health = collision.gameObject.GetComponent<HealthController>();
+        HealthController health = other.gameObject.GetComponent<HealthController>();
         if (health)
         {
             // deal damage, pass in info about the damage
